@@ -33,6 +33,12 @@ sublist3r -d "$domain" -o sublist3r > /dev/null 2>&1 &
 # Execute the waybackurls command with the provided domain
 echo "$domain" | waybackurls | cut -d "/" -f 3 >> waybackurls &
 
+# Execute the findomain command with the provided domain
+findomain -t "$domain" -q >> findomain
+
+# Execute the puredns command with the provided domain
+puredns bruteforce subdomains-10000.txt "$domain" --resolvers resolvers.txt -q >> puredns &
+
 # Wait for all processes to finish
 wait
 
