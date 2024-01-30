@@ -28,7 +28,7 @@ subfinder -silent -d "$domain" >> subfinder &
 assetfinder -subs-only "$domain" >> assetfinder &
 
 # Execute the sublist3r command with the provided domain, suppressing output
-sublist3r -d "$domain" >> sublist3r &
+sublist3r -d "$domain" | grep "$domain" | grep -i -v "Enumerating Subdomains" >> sublist3r &
 
 # Execute the waybackurls command with the provided domain
 echo "$domain" | waybackurls | cut -d "/" -f 3 >> waybackurls &
@@ -42,42 +42,42 @@ puredns bruteforce subdomains-10000.txt "$domain" --resolvers resolvers.txt -q >
 # Wait for all processes to finish
 wait
 
-#echo ""
-#echo ""
-#echo -e "${yellow}#####################################################${reset}"
-#echo -e "\n${yellow}juntando subdominios e removendo duplicados${reset}"
-#echo -e "${yellow}#####################################################${reset}"
-#cat subfinder | anew subdomains.txt > /dev/null &
-#wait
-#rm subfinder
-#cat assetfinder | anew subdomains.txt > /dev/null &
-#wait
-#rm assetfinder
-#cat sublist3r | anew subdomains.txt > /dev/null &
-#wait
-#rm sublist3r
-#cat waybackurls | anew subdomains.txt > /dev/null &
-#wait
-#rm waybackurls
-#cat findomain | anew subdomains.txt > /dev/null &
-#wait
-#rm findomain
-#cat puredns | anew subdomains.txt > /dev/null &
-#wait
-#rm puredns
+echo ""
+echo ""
+echo -e "${yellow}#####################################################${reset}"
+echo -e "${yellow}juntando subdominios e removendo duplicados${reset}"
+echo -e "${yellow}#####################################################${reset}"
+cat subfinder | anew subdomains.txt > /dev/null &
+wait
+rm subfinder
+cat assetfinder | anew subdomains.txt > /dev/null &
+wait
+rm assetfinder
+cat sublist3r | anew subdomains.txt > /dev/null &
+wait
+rm sublist3r
+cat waybackurls | anew subdomains.txt > /dev/null &
+wait
+rm waybackurls
+cat findomain | anew subdomains.txt > /dev/null &
+wait
+rm findomain
+cat puredns | anew subdomains.txt > /dev/null &
+wait
+rm puredns
 
-#echo ""
-#echo ""
-#echo -e "${yellow}#####################################################${reset}"
-#echo -e "\n${yellow}pegando o codigo para cada subdominio${reset}"
-#echo -e "${yellow}#####################################################${reset}"
+echo ""
+echo ""
+echo -e "${yellow}#####################################################${reset}"
+echo -e "${yellow}pegando o codigo para cada subdominio${reset}"
+echo -e "${yellow}#####################################################${reset}"
 
-#cat subdomains.txt | httpx_bug -silent -status-code >> output.txt
-#wait
-#rm subdomains.txt
+cat subdomains.txt | httpx_bug -silent -status-code >> output.txt
+wait
+rm subdomains.txt
 
-#echo ""
-#echo ""
-#echo -e "${yellow}#####################################################${reset}"
-#echo -e "\n${yellow}Processing completed.${reset}"
-#echo -e "${yellow}#####################################################${reset}"
+echo ""
+echo ""
+echo -e "${yellow}#####################################################${reset}"
+echo -e "${yellow}Processing completed.${reset}"
+echo -e "${yellow}#####################################################${reset}"
