@@ -35,7 +35,7 @@ sublist3r -d "$domain" | grep "$domain" | grep -i -v "Enumerating Subdomains" >>
 echo "$domain" | waybackurls | cut -d "/" -f 3 >> waybackurls &
 
 # Execute the findomain command with the provided domain
-findomain -t "$domain" -q >> findomain
+findomain -t "$domain" -q >> findomain &
 
 # Execute the puredns command with the provided domain
 puredns bruteforce subdomains-10000.txt "$domain" --resolvers resolvers.txt -q >> puredns &
