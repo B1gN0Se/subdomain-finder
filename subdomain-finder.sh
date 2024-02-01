@@ -19,7 +19,7 @@ fi
 domain="$1"
 
 echo -e "${yellow}########################################################################${reset}"
-echo -e "${yellow}The script is fetching the subdomains, please wait. Go make a coffe :)${reset}"
+echo -e "${yellow}The script is fetching the subdomains, please wait. Go make a coffee :)${reset}"
 echo -e "${yellow}########################################################################${reset}"
 
 # Execute the subfinder command with the provided domain
