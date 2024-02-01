@@ -3,6 +3,7 @@
 # ANSI Colors
 yellow='\033[1;33m'
 reset='\033[0m'
+green='\033[1;32m'
 
 # Check if the correct number of arguments has been provided
 if [ $# -ne 1 ]; then
@@ -17,9 +18,9 @@ fi
 # Get the domain from the command line argument
 domain="$1"
 
-echo -e "${yellow}#####################################################${reset}"
-echo -e "${yellow}The script is fetching the subdomains, please wait.${reset}"
-echo -e "${yellow}#####################################################${reset}"
+echo -e "${yellow}########################################################################${reset}"
+echo -e "${yellow}The script is fetching the subdomains, please wait. Go make a coffe :)${reset}"
+echo -e "${yellow}########################################################################${reset}"
 
 # Execute the subfinder command with the provided domain
 subfinder -silent -d "$domain" >> subfinder &
@@ -44,9 +45,9 @@ wait
 
 echo ""
 echo ""
-echo -e "${yellow}#####################################################${reset}"
-echo -e "${yellow}juntando subdominios e removendo duplicados${reset}"
-echo -e "${yellow}#####################################################${reset}"
+echo -e "${yellow}##############################################${reset}"
+echo -e "${yellow}Combining subdomains and removing duplicates${reset}"
+echo -e "${yellow}##############################################${reset}"
 cat subfinder | anew subdomains.txt > /dev/null &
 wait
 rm subfinder
@@ -68,9 +69,9 @@ rm puredns
 
 echo ""
 echo ""
-echo -e "${yellow}#####################################################${reset}"
-echo -e "${yellow}pegando o codigo para cada subdominio${reset}"
-echo -e "${yellow}#####################################################${reset}"
+echo -e "${yellow}############################################################${reset}"
+echo -e "${yellow}Validating and retrieving the HTTP code for each subdomain${reset}"
+echo -e "${yellow}############################################################${reset}"
 
 cat subdomains.txt | httpx_bug -silent -status-code >> output.txt
 wait
@@ -78,6 +79,6 @@ rm subdomains.txt
 
 echo ""
 echo ""
-echo -e "${yellow}#####################################################${reset}"
-echo -e "${yellow}Processing completed.${reset}"
-echo -e "${yellow}#####################################################${reset}"
+echo -e "${yellow}##################################################${reset}"
+echo -e "${green}Processing completed. Please check output.txt${reset}"
+echo -e "${yellow}##################################################${reset}"
