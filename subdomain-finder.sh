@@ -43,8 +43,11 @@ puredns bruteforce subdomains-10000.txt "$domain" --resolvers resolvers.txt -q >
 # Send the request using crt.sh and getting the subdomains
 curl -s "https://crt.sh/?q="$domain"&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | anew >> crt &
 
-#Send the request using jldc.me and getting the subdomains
+# Send the request using jldc.me and getting the subdomains
 curl -s "https://jldc.me/anubis/subdomains/"$domain"" | jq -r '.[]' | anew >> jldc &
+
+# Execute the chaos command with the provided domain
+chaos -silent -d "$domain" | anew >> chaos &
 
 # Wait for all processes to finish
 wait
@@ -54,6 +57,7 @@ echo ""
 echo -e "${yellow}##############################################${reset}"
 echo -e "${yellow}Combining subdomains and removing duplicates${reset}"
 echo -e "${yellow}##############################################${reset}"
+sleep 2
 
 cat subfinder | anew subdomains.txt > /dev/null &
 wait
@@ -79,14 +83,11 @@ rm crt
 cat jldc | anew subdomains.txt > /dev/null &
 wait
 rm jldc
+cat chaos | anew subdomains.txt > /dev/null &
+wait
+rm chaos
 
-#echo ""
-#echo ""
-#echo -e "${yellow}############################################################${reset}"
-#echo -e "${yellow}Validating and retrieving the HTTP code for each subdomain${reset}"
-#echo -e "${yellow}############################################################${reset}"
-
-cat subdomains.txt | cut -d ":" -f 1 | anew >> output.txt &
+cat subdomains.txt | cut -d ":" -f 1 | grep -v "*" | anew >> output.txt &
 wait
 rm subdomains.txt
 
