@@ -29,7 +29,7 @@ subfinder -silent -d "$domain" >> subfinder &
 assetfinder -subs-only "$domain" >> assetfinder &
 
 # Execute the sublist3r command with the provided domain, suppressing output
-sublist3r -d "$domain" | grep "$domain" | grep -i -v "Enumerating Subdomains" >> sublist3r &
+sublist3r -d "$domain" -n | grep "$domain" | grep -i -v "Enumerating Subdomains" >> sublist3r &
 
 # Execute the waybackurls command with the provided domain
 echo "$domain" | waybackurls | cut -d "/" -f 3 >> waybackurls &
@@ -40,6 +40,12 @@ findomain -t "$domain" -q >> findomain &
 # Execute the puredns command with the provided domain
 puredns bruteforce subdomains-10000.txt "$domain" --resolvers resolvers.txt -q >> puredns &
 
+# Send the request using crt.sh and getting the subdomains
+curl -s "https://crt.sh/?q="$domain"&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | anew >> crt &
+
+#Send the request using jldc.me and getting the subdomains
+curl -s "https://jldc.me/anubis/subdomains/"$domain"" | jq -r '.[]' | anew >> jldc &
+
 # Wait for all processes to finish
 wait
 
@@ -48,6 +54,7 @@ echo ""
 echo -e "${yellow}##############################################${reset}"
 echo -e "${yellow}Combining subdomains and removing duplicates${reset}"
 echo -e "${yellow}##############################################${reset}"
+
 cat subfinder | anew subdomains.txt > /dev/null &
 wait
 rm subfinder
@@ -66,14 +73,20 @@ rm findomain
 cat puredns | anew subdomains.txt > /dev/null &
 wait
 rm puredns
+cat crt | anew subdomains.txt > /dev/null &
+wait
+rm crt
+cat jldc | anew subdomains.txt > /dev/null &
+wait
+rm jldc
 
-echo ""
-echo ""
-echo -e "${yellow}############################################################${reset}"
-echo -e "${yellow}Validating and retrieving the HTTP code for each subdomain${reset}"
-echo -e "${yellow}############################################################${reset}"
+#echo ""
+#echo ""
+#echo -e "${yellow}############################################################${reset}"
+#echo -e "${yellow}Validating and retrieving the HTTP code for each subdomain${reset}"
+#echo -e "${yellow}############################################################${reset}"
 
-cat subdomains.txt | httpx_bug -silent -status-code >> output.txt
+cat subdomains.txt | cut -d ":" -f 1 | anew >> output.txt &
 wait
 rm subdomains.txt
 
