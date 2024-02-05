@@ -8,5 +8,17 @@ Tested on **Kali Linux**
 
 **Steps:**
 ```sh
-git clone
+git clone https://github.com/thpereira1/subdomain-finder.git
+```
+```sh
+cd subdomain-finder
+```
+```sh
+chmod +x install.sh && ./install.sh
+```
+```sh
+chmod +x subdomain-finder.sh
+```
+```sh
+./subdomain-finder.sh
 ```
