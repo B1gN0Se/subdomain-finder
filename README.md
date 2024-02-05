@@ -7,7 +7,7 @@ Tested on **Kali Linux**
 **Requirements:** Before running the installation tools and executing the tool, we need to configure our Chaos key in the system. To do this, we need to access the URL https://cloud.projectdiscovery.io/, log in, and save the API key. Now, in Kali Linux, enter the command below: 
 
 ```sh
-export CHAOS_KEY=YOUR_KEY. After that, we can proceed with the steps below.
+export CHAOS_KEY=YOUR_KEY
 ```
 After that, we can proceed with the steps below.
 
