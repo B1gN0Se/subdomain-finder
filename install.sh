@@ -31,3 +31,9 @@ go install github.com/d3mondev/puredns/v2@latest
 mv /root/go/bin/puredns /usr/bin/
 
 apt install jq -y
+
+git clone https://github.com/blechschmidt/massdns.git
+cd massdns
+make
+make install
+rm massdns.git
