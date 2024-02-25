@@ -38,3 +38,6 @@ make
 make install
 cd ..
 rm massdns
+
+go install github.com/lc/gau/v2/cmd/gau@latest
+mv /root/go/bin/gau /usr/bin/
