@@ -13,7 +13,7 @@ After that, we can proceed with the steps below.
 
 **Steps:**
 ```sh
-git clone https://github.com/thpereira1/subdomain-finder.git
+git clone https://github.com/b1gn0se/subdomain-finder.git
 ```
 ```sh
 cd subdomain-finder
